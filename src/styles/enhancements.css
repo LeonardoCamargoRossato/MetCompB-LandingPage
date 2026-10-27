@@ -1,0 +1,91 @@
+/* V0.2 — light/dark themes, navigation controls, lesson cards and carousels */
+:root[data-theme="light"]{--bg:#f7faf8;--panel:#ffffff;--panel2:#f0f5f2;--line:#d8e3dd;--text:#17231d;--muted:#617269;--green:#168a50;--green2:#08743f;color:#17231d;background:#f7faf8}
+:root[data-theme="light"] body{background:radial-gradient(circle at 70% -10%,rgba(38,170,99,.10),transparent 30%),var(--bg);color:var(--text)}
+:root[data-theme="light"] .header{background:rgba(250,253,251,.90);border-color:#d9e7df}
+:root[data-theme="light"] .brand-mark{background:#eef8f2;border-color:#b8d8c6;color:#168a50;box-shadow:none}
+:root[data-theme="light"] .brand small,:root[data-theme="light"] .kicker,:root[data-theme="light"] .eyebrow{color:#577267}
+:root[data-theme="light"] .nav a{color:#52665c}
+:root[data-theme="light"] .nav a:hover,:root[data-theme="light"] .nav a.active{color:#10231a;background:#eaf4ee}
+:root[data-theme="light"] .hero-copy>p,:root[data-theme="light"] .section-head>p,:root[data-theme="light"] .concept-main p,:root[data-theme="light"] .content-card p,:root[data-theme="light"] .page-title p,:root[data-theme="light"] .detail-hero p,:root[data-theme="light"] .detail-grid p,:root[data-theme="light"] .clean-list,:root[data-theme="light"] .video-detail p,:root[data-theme="light"] .video-card-copy p,:root[data-theme="light"] .about-card p{color:#596d62}
+:root[data-theme="light"] .button{background:#fff;color:#20372b;border-color:#c9d9d0}
+:root[data-theme="light"] .button:hover{border-color:#90b5a0;background:#f5faf7}
+:root[data-theme="light"] .button.primary{background:#1aa35d;color:#fff;border-color:#1aa35d}
+:root[data-theme="light"] .tags span{background:#f4faf6;border-color:#cfe2d7;color:#426653}
+:root[data-theme="light"] .terminal-card{background:linear-gradient(180deg,#fff,#f5faf7);border-color:#cdded4;box-shadow:0 25px 60px rgba(40,70,54,.10)}
+:root[data-theme="light"] .terminal-top,:root[data-theme="light"] .chart-line{border-color:#dce8e1;color:#627a6d}
+:root[data-theme="light"] .terminal-card pre{color:#385144}
+:root[data-theme="light"] .concept-main,:root[data-theme="light"] .about-card{background:linear-gradient(145deg,#fff,#f6faf8)}
+:root[data-theme="light"] .topic-cloud span{color:#4e6559}
+:root[data-theme="light"] .content-card,:root[data-theme="light"] .video-card,:root[data-theme="light"] .file-list>a{background:#fff}
+:root[data-theme="light"] .content-card:hover,:root[data-theme="light"] .video-card:hover{background:#fbfefc;border-color:#83b79b;box-shadow:0 12px 35px rgba(33,81,55,.08)}
+:root[data-theme="light"] .card-visual{background:linear-gradient(135deg,#eff8f3,#f8fcfa);border-color:#d1e3d8}
+:root[data-theme="light"] .card-visual code{color:#257a4c}
+:root[data-theme="light"] .formula-box{background:#f1f8f4;border-color:#cce1d5}
+:root[data-theme="light"] .file-list>a:hover,:root[data-theme="light"] .explorer-row:hover{background:#f6faf8}
+:root[data-theme="light"] .file-list b{color:#263c31}
+:root[data-theme="light"] .search,:root[data-theme="light"] .filter-bar select{background:#fff;color:#304b3d}
+:root[data-theme="light"] .explorer-head{background:#eef5f1;color:#546b60}
+:root[data-theme="light"] .video-modal{background:#fff;border-color:#b9d8c7;box-shadow:0 35px 100px rgba(24,48,35,.22)}
+:root[data-theme="light"] .modal-toolbar{background:#f7fbf9;border-color:#dce9e2}
+:root[data-theme="light"] .modal-toolbar button,:root[data-theme="light"] .carousel-controls button{background:#fff;border-color:#cbded3;color:#274839}
+:root[data-theme="light"] .lesson-card,:root[data-theme="light"] .image-carousel{background:#fff;border-color:#d5e3dc}
+:root[data-theme="light"] .footer{background:#f2f7f4}
+
+.header{min-height:72px;height:auto;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+.header-tools{display:flex;align-items:center;gap:6px}
+.icon-control,.language-control{height:34px;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.icon-control{width:34px}
+.language-control{gap:6px;padding:0 9px}
+.language-control span{font-size:16px;line-height:1}
+.creator-link{font:10px var(--mono);color:var(--muted);white-space:nowrap;padding:8px 0 8px 8px}
+.creator-link:hover{color:var(--green)}
+
+.clickable-card{cursor:pointer}
+.clickable-card:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.card-open{font-size:11px;border:1px solid var(--green);border-radius:6px;padding:8px 10px;color:#07100a;background:var(--green);font-weight:600}
+:root[data-theme="light"] .card-open{color:#fff}
+.card-actions a:first-of-type{background:transparent;color:inherit;border-color:var(--line)}
+
+.modal-backdrop{padding:28px}
+.video-modal{overflow:hidden;display:flex;flex-direction:column;max-height:94vh}
+.modal-toolbar{height:54px;flex:0 0 54px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 16px;background:var(--panel)}
+.modal-nav{display:flex;align-items:center;gap:10px;color:var(--muted);font:10px var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.modal-toolbar button,.carousel-controls button{width:34px;height:34px;border:1px solid var(--line);background:var(--panel2);border-radius:8px;display:grid;place-items:center;color:var(--text);cursor:pointer}
+.modal-close{position:static;width:36px!important;height:36px!important;background:var(--panel2)!important;border-color:var(--line)!important}
+.video-modal .video-frame{flex:0 0 auto}
+.video-detail{overflow:auto}
+.video-modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.video-modal-actions .button{margin-top:0}
+.related-links{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px;color:var(--muted);font-size:11px}
+.related-links a{color:var(--green);border-bottom:1px solid currentColor}
+
+.lesson-section{margin:10px 0 50px}
+.lesson-card{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.lesson-video{aspect-ratio:16/9;background:#000}
+.lesson-video iframe{width:100%;height:100%;border:0;display:block}
+.lesson-copy{padding:28px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.lesson-copy h3{font-size:24px;line-height:1.25;margin:10px 0 12px}
+.lesson-copy p{color:var(--muted);line-height:1.65;font-size:13px}
+.lesson-copy .button{margin-top:20px}
+.carousel-controls{display:flex;align-items:center;gap:8px;color:var(--muted);font:10px var(--mono)}
+.section-note{margin:6px 0 0;color:var(--muted);font-size:12px}
+.visual-preview{margin-top:42px}
+.image-carousel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.image-carousel a{display:block}
+.image-carousel img{display:block;width:100%;height:min(62vh,610px);object-fit:contain;background:var(--panel2)}
+.image-carousel span{display:block;padding:12px 16px;color:var(--muted);font:10px var(--mono);border-top:1px solid var(--line)}
+.carousel-dots{display:flex;gap:7px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.carousel-dots button{width:8px;height:8px;border:0;border-radius:50%;padding:0;background:#aab9b1;cursor:pointer}
+.carousel-dots button.active{background:var(--green);transform:scale(1.35)}
+
+.portfolio-about{display:grid;grid-template-columns:1.35fr .65fr;gap:16px}
+.profile-facts{display:grid;gap:8px;margin:20px 0}
+.profile-facts span{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px}
+.profile-facts svg{width:16px;color:var(--green)}
+.about-card.profile a{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:9px;padding:10px;border:1px solid var(--line);border-radius:8px}
+.about-card.profile a svg{width:15px}
+.about-card.profile .profile-primary{background:var(--green);color:#07100a;border-color:var(--green);font-weight:700}
+:root[data-theme="light"] .about-card.profile .profile-primary{color:#fff}
+
+@media(max-width:1050px){.creator-link{order:4;width:100%;text-align:right;padding:0}.header{gap:12px}.lesson-card,.portfolio-about{grid-template-columns:1fr}.lesson-copy{padding:22px}.lesson-video{width:100%}}
+@media(max-width:760px){.header{padding-top:8px;padding-bottom:8px}.header-tools{margin-left:auto}.creator-link{display:none}.nav{order:5}.modal-backdrop{padding:10px}.modal-nav span{display:none}.video-detail{padding:20px}.lesson-copy h3{font-size:20px}.image-carousel img{height:42vh}.footer{flex-direction:column}.footer-links{flex-wrap:wrap}}
