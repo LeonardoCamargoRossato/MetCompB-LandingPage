@@ -30,6 +30,9 @@ jobs:
           base64 --decode /tmp/project.zip.b64 > /tmp/project.zip
           echo "2b6c6227e90681f88c0f48a1fb16a083c12248380266d330814f92dd540a2191  /tmp/project.zip" | sha256sum -c -
           unzip -o /tmp/project.zip -d .
+          sed -i 's/Github/GithubIcon/g' src/components/Layout.tsx src/pages/About.tsx src/pages/Home.tsx
+          sed -i 's/Youtube/YoutubeIcon/g' src/pages/About.tsx
+          printf '/// <reference types="vite/client" />\n' > src/vite-env.d.ts
           rm -rf .bootstrap project.zip.b64 .github/workflows/bootstrap.yml
       - uses: actions/setup-node@v4
         with:
