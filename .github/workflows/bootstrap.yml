@@ -1,14 +1,20 @@
-name: Finalize V0 Repository
+name: Build and Deploy MetCompB Landing Page
 
 on:
   push:
     branches: [main]
     paths:
+      - 'src/**'
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.ts'
+      - 'tsconfig*.json'
       - '.github/workflows/bootstrap.yml'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -17,30 +23,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  finalize-build:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Clean generated files from repository
-        run: |
-          rm -rf node_modules dist
-          rm -f tsconfig.app.tsbuildinfo tsconfig.node.tsbuildinfo
-          cat > .gitignore <<'EOF'
-          node_modules/
-          dist/
-          *.tsbuildinfo
-          .DS_Store
-          EOF
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "Clean generated files from V0 repository" || true
-          git push
+          cache: npm
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
       - name: Build
@@ -55,7 +45,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: finalize-build
+    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
