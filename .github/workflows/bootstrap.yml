@@ -34,7 +34,8 @@ jobs:
           sed -i "s/{ ArrowRight, Github, PlayCircle, TerminalSquare }/{ ArrowRight, PlayCircle, TerminalSquare }/; s/<Github size={17}\/>/<TerminalSquare size={17}\/>/" src/pages/Home.tsx
           sed -i "s/{ ExternalLink, Github, Youtube }/{ ExternalLink }/; s/<Github\/>/<ExternalLink\/>/g; s/<Youtube\/>/<ExternalLink\/>/g" src/pages/About.tsx
           printf '/// <reference types="vite/client" />\n' > src/vite-env.d.ts
-          rm -rf .bootstrap project.zip.b64 .github/workflows/bootstrap.yml
+          rm -rf .bootstrap project.zip.b64
+          rm -f .github/workflows/deploy.yml
       - uses: actions/setup-node@v4
         with:
           node-version: 22
