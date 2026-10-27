@@ -8,12 +8,15 @@ type Preferences = {
   theme: Theme
   siteIconUrl: string | null
   profilePhotoUrl: string | null
+  jupyterIconUrl: string | null
   setLanguage: (language: Language) => void
   setTheme: (theme: Theme) => void
   setSiteIcon: (file: File) => void
   setProfilePhoto: (file: File) => void
+  setJupyterIcon: (file: File) => void
   clearSiteIcon: () => void
   clearProfilePhoto: () => void
+  clearJupyterIcon: () => void
 }
 
 const PreferencesContext = createContext<Preferences | null>(null)
@@ -65,12 +68,14 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('light')
   const [siteIconUrl, setSiteIconUrl] = useState<string | null>(null)
   const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null)
+  const [jupyterIconUrl, setJupyterIconUrl] = useState<string | null>(null)
 
   useEffect(() => {
     void readValue<Language>('language', 'en').then(setLanguageState)
     void readValue<Theme>('theme', 'light').then(setThemeState)
     void readValue<Blob | null>('siteIcon', null).then(v=>setSiteIconUrl(blobUrl(v)))
     void readValue<Blob | null>('profilePhoto', null).then(v=>setProfilePhotoUrl(blobUrl(v)))
+    void readValue<Blob | null>('jupyterIcon', null).then(v=>setJupyterIconUrl(blobUrl(v)))
   }, [])
 
   useEffect(() => { document.documentElement.dataset.theme = theme }, [theme])
@@ -81,14 +86,16 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
   }
 
   const value = useMemo<Preferences>(() => ({
-    language, theme, siteIconUrl, profilePhotoUrl,
+    language, theme, siteIconUrl, profilePhotoUrl, jupyterIconUrl,
     setLanguage: (next) => { setLanguageState(next); void writeValue('language', next) },
     setTheme: (next) => { setThemeState(next); void writeValue('theme', next) },
     setSiteIcon: (file) => { replaceUrl(setSiteIconUrl,siteIconUrl,file); void writeValue('siteIcon',file) },
     setProfilePhoto: (file) => { replaceUrl(setProfilePhotoUrl,profilePhotoUrl,file); void writeValue('profilePhoto',file) },
+    setJupyterIcon: (file) => { replaceUrl(setJupyterIconUrl,jupyterIconUrl,file); void writeValue('jupyterIcon',file) },
     clearSiteIcon: () => { replaceUrl(setSiteIconUrl,siteIconUrl,null); void deleteValue('siteIcon') },
     clearProfilePhoto: () => { replaceUrl(setProfilePhotoUrl,profilePhotoUrl,null); void deleteValue('profilePhoto') },
-  }), [language, theme, siteIconUrl, profilePhotoUrl])
+    clearJupyterIcon: () => { replaceUrl(setJupyterIconUrl,jupyterIconUrl,null); void deleteValue('jupyterIcon') },
+  }), [language, theme, siteIconUrl, profilePhotoUrl, jupyterIconUrl])
 
   return <PreferencesContext.Provider value={value}>{children}</PreferencesContext.Provider>
 }
