@@ -1,13 +1,19 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 
-export type Language = 'en' | 'pt'
+export type Language = 'en' | 'pt' | 'de' | 'fr' | 'es'
 export type Theme = 'light' | 'dark'
 
 type Preferences = {
   language: Language
   theme: Theme
+  siteIconUrl: string | null
+  profilePhotoUrl: string | null
   setLanguage: (language: Language) => void
   setTheme: (theme: Theme) => void
+  setSiteIcon: (file: File) => void
+  setProfilePhoto: (file: File) => void
+  clearSiteIcon: () => void
+  clearProfilePhoto: () => void
 }
 
 const PreferencesContext = createContext<Preferences | null>(null)
@@ -26,7 +32,7 @@ function openDb(): Promise<IDBDatabase> {
   })
 }
 
-async function readPref<T>(key: string, fallback: T): Promise<T> {
+async function readValue<T>(key: string, fallback: T): Promise<T> {
   try {
     const db = await openDb()
     return await new Promise<T>((resolve) => {
@@ -35,40 +41,54 @@ async function readPref<T>(key: string, fallback: T): Promise<T> {
       request.onsuccess = () => resolve((request.result as T) ?? fallback)
       request.onerror = () => resolve(fallback)
     })
-  } catch {
-    return fallback
-  }
+  } catch { return fallback }
 }
 
-async function writePref(key: string, value: string) {
+async function writeValue(key: string, value: unknown) {
   try {
     const db = await openDb()
-    const tx = db.transaction(STORE, 'readwrite')
-    tx.objectStore(STORE).put(value, key)
-  } catch {
-    // Preferences are non-critical; the app still works if IndexedDB is unavailable.
-  }
+    db.transaction(STORE, 'readwrite').objectStore(STORE).put(value, key)
+  } catch { /* non-critical local preference */ }
 }
+
+async function deleteValue(key: string) {
+  try {
+    const db = await openDb()
+    db.transaction(STORE, 'readwrite').objectStore(STORE).delete(key)
+  } catch { /* non-critical local preference */ }
+}
+
+function blobUrl(value: Blob | null) { return value ? URL.createObjectURL(value) : null }
 
 export function PreferencesProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>('en')
   const [theme, setThemeState] = useState<Theme>('light')
+  const [siteIconUrl, setSiteIconUrl] = useState<string | null>(null)
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null)
 
   useEffect(() => {
-    void readPref<Language>('language', 'en').then(setLanguageState)
-    void readPref<Theme>('theme', 'light').then(setThemeState)
+    void readValue<Language>('language', 'en').then(setLanguageState)
+    void readValue<Theme>('theme', 'light').then(setThemeState)
+    void readValue<Blob | null>('siteIcon', null).then(v=>setSiteIconUrl(blobUrl(v)))
+    void readValue<Blob | null>('profilePhoto', null).then(v=>setProfilePhotoUrl(blobUrl(v)))
   }, [])
 
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme
-  }, [theme])
+  useEffect(() => { document.documentElement.dataset.theme = theme }, [theme])
+
+  const replaceUrl=(setter:(v:string|null)=>void,current:string|null,file:File|null)=>{
+    if(current) URL.revokeObjectURL(current)
+    setter(file?URL.createObjectURL(file):null)
+  }
 
   const value = useMemo<Preferences>(() => ({
-    language,
-    theme,
-    setLanguage: (next) => { setLanguageState(next); void writePref('language', next) },
-    setTheme: (next) => { setThemeState(next); void writePref('theme', next) },
-  }), [language, theme])
+    language, theme, siteIconUrl, profilePhotoUrl,
+    setLanguage: (next) => { setLanguageState(next); void writeValue('language', next) },
+    setTheme: (next) => { setThemeState(next); void writeValue('theme', next) },
+    setSiteIcon: (file) => { replaceUrl(setSiteIconUrl,siteIconUrl,file); void writeValue('siteIcon',file) },
+    setProfilePhoto: (file) => { replaceUrl(setProfilePhotoUrl,profilePhotoUrl,file); void writeValue('profilePhoto',file) },
+    clearSiteIcon: () => { replaceUrl(setSiteIconUrl,siteIconUrl,null); void deleteValue('siteIcon') },
+    clearProfilePhoto: () => { replaceUrl(setProfilePhotoUrl,profilePhotoUrl,null); void deleteValue('profilePhoto') },
+  }), [language, theme, siteIconUrl, profilePhotoUrl])
 
   return <PreferencesContext.Provider value={value}>{children}</PreferencesContext.Provider>
 }
