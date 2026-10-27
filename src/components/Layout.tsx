@@ -1,28 +1,50 @@
-import { Languages, Menu, Moon, Sun, Terminal, X } from 'lucide-react'
-import { useState } from 'react'
+import { Check, ChevronDown, Menu, Moon, Sun, Terminal, X } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { usePreferences } from '../context/Preferences'
+import { usePreferences, type Language } from '../context/Preferences'
 
 const portfolioUrl='https://leonardocamargorossato.github.io/LCR-SolutionsArchitecture-IA-Quantum/#/'
+const languages:{code:Language;flag:string;label:string}[]=[
+ {code:'en',flag:'🇺🇸',label:'English'},
+ {code:'pt',flag:'🇧🇷',label:'Português'},
+ {code:'de',flag:'🇩🇪',label:'Deutsch'},
+ {code:'fr',flag:'🇫🇷',label:'Français'},
+ {code:'es',flag:'🇪🇸',label:'Español'},
+]
+const navByLanguage:Record<Language,string[]>={
+ en:['Home','Video Lessons','Contents','Files','About'],
+ pt:['Home','Videoaulas','Conteúdos','Arquivos','Sobre'],
+ de:['Start','Videolektionen','Inhalte','Dateien','Über'],
+ fr:['Accueil','Cours vidéo','Contenus','Fichiers','À propos'],
+ es:['Inicio','Videoclases','Contenidos','Archivos','Acerca de'],
+}
+const routes=['/','/videoaulas','/conteudos','/arquivos','/sobre']
 
 export function Layout(){
  const [open,setOpen]=useState(false)
- const {language,theme,setLanguage,setTheme}=usePreferences()
- const nav=language==='en'
-  ? [['/','Home'],['/videoaulas','Video Lessons'],['/conteudos','Contents'],['/arquivos','Files'],['/sobre','About']]
-  : [['/','Home'],['/videoaulas','Videoaulas'],['/conteudos','Conteúdos'],['/arquivos','Arquivos'],['/sobre','Sobre']]
+ const [languageOpen,setLanguageOpen]=useState(false)
+ const languageBox=useRef<HTMLDivElement>(null)
+ const {language,theme,setLanguage,setTheme,siteIconUrl}=usePreferences()
+ const current=languages.find(x=>x.code===language)!
+ useEffect(()=>{
+   const close=(e:MouseEvent)=>{if(languageBox.current&&!languageBox.current.contains(e.target as Node))setLanguageOpen(false)}
+   document.addEventListener('mousedown',close);return()=>document.removeEventListener('mousedown',close)
+ },[])
  return <div className="app-shell">
    <header className="header">
-    <NavLink to="/" className="brand"><span className="brand-mark"><Terminal size={20}/></span><span><b>MetCompB</b><small>Scientific Computing Lab</small></span></NavLink>
-    <button className="menu-btn" onClick={()=>setOpen(!open)} aria-label={language==='en'?'Open menu':'Abrir menu'}>{open?<X/>:<Menu/>}</button>
-    <nav className={open?'nav open':'nav'}>{nav.map(([to,label])=><NavLink key={to} to={to} onClick={()=>setOpen(false)} className={({isActive})=>isActive?'active':''}>{label}</NavLink>)}</nav>
+    <NavLink to="/" className="brand"><span className="brand-mark">{siteIconUrl?<img src={siteIconUrl} alt="MetCompB"/>:<Terminal size={20}/>}</span><span><b>MetCompB</b><small>Scientific Computing Lab</small></span></NavLink>
+    <button className="menu-btn" onClick={()=>setOpen(!open)} aria-label="Menu">{open?<X/>:<Menu/>}</button>
+    <nav className={open?'nav open':'nav'}>{routes.map((to,i)=><NavLink key={to} to={to} onClick={()=>setOpen(false)} className={({isActive})=>isActive?'active':''}>{navByLanguage[language][i]}</NavLink>)}</nav>
     <div className="header-tools">
-      <button className="icon-control" onClick={()=>setTheme(theme==='light'?'dark':'light')} aria-label={theme==='light'?'Switch to dark theme':'Mudar para tema claro'} title={theme==='light'?'Dark theme':'Tema claro'}>{theme==='light'?<Moon size={18}/>:<Sun size={18}/>}</button>
-      <button className="language-control" onClick={()=>setLanguage(language==='en'?'pt':'en')} aria-label="Change language" title={language==='en'?'Português':'English'}><span>{language==='en'?'🇺🇸':'🇧🇷'}</span><Languages size={15}/></button>
+      <button className="icon-control" onClick={()=>setTheme(theme==='light'?'dark':'light')} aria-label="Theme">{theme==='light'?<Moon size={18}/>:<Sun size={18}/>}</button>
+      <div className="language-picker" ref={languageBox}>
+       <button className="language-control" onClick={()=>setLanguageOpen(!languageOpen)} aria-haspopup="listbox" aria-expanded={languageOpen}><span className="flag">{current.flag}</span><ChevronDown size={14}/></button>
+       {languageOpen&&<div className="language-menu" role="listbox">{languages.map(item=><button key={item.code} className={item.code===language?'selected':''} onClick={()=>{setLanguage(item.code);setLanguageOpen(false)}}><span>{item.flag}</span><b>{item.label}</b>{item.code===language&&<Check size={14}/>}</button>)}</div>}
+      </div>
     </div>
     <a className="creator-link" href={portfolioUrl} target="_blank" rel="noopener noreferrer">@LeonardoCamargoRossato</a>
    </header>
    <main><Outlet/></main>
-   <footer className="footer"><div><b>MetCompB</b><p>{language==='en'?'Scientific computing archive curated by Leonardo Camargo Rossato.':'Acervo de computação científica curado por Leonardo Camargo Rossato.'}</p></div><div className="footer-links"><a href="https://github.com/LeonardoCamargoRossato/MetCompB" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.youtube.com/@MetCompB_UFRGS" target="_blank" rel="noopener noreferrer">YouTube</a><a href={portfolioUrl} target="_blank" rel="noopener noreferrer">Portfolio ↗</a></div></footer>
+   <footer className="footer"><div><b>MetCompB</b><p>Scientific computing archive by Leonardo Camargo Rossato.</p></div><div className="footer-links"><a href="https://github.com/LeonardoCamargoRossato/MetCompB" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://www.youtube.com/@MetCompB_UFRGS" target="_blank" rel="noopener noreferrer">YouTube</a><a href={portfolioUrl} target="_blank" rel="noopener noreferrer">Portfolio ↗</a></div></footer>
  </div>
 }
