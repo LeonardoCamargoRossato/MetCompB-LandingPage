@@ -6,5 +6,6 @@ import { ContentDetail } from './pages/ContentDetail'
 import { Contents } from './pages/Contents'
 import { FilesPage } from './pages/FilesPage'
 import { Home } from './pages/Home'
+import { JupyterTutorial } from './pages/JupyterTutorial'
 import { Videos } from './pages/Videos'
-export default function App(){return <HashRouter><Routes><Route element={<Layout/>}><Route path="/" element={<Home/>}/><Route path="/conteudos" element={<Contents/>}/><Route path="/conteudos/:slug" element={<ContentDetail/>}/><Route path="/videoaulas" element={<Videos/>}/><Route path="/arquivos" element={<FilesPage/>}/><Route path="/sobre" element={<About/>}/><Route path="/admin" element={<Admin/>}/></Route></Routes></HashRouter>}
+export default function App(){return <HashRouter><Routes><Route element={<Layout/>}><Route path="/" element={<Home/>}/><Route path="/conteudos" element={<Contents/>}/><Route path="/conteudos/tutorial-jupyter" element={<JupyterTutorial/>}/><Route path="/conteudos/:slug" element={<ContentDetail/>}/><Route path="/videoaulas" element={<Videos/>}/><Route path="/arquivos" element={<FilesPage/>}/><Route path="/sobre" element={<About/>}/><Route path="/admin" element={<Admin/>}/></Route></Routes></HashRouter>}
