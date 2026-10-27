@@ -4,53 +4,85 @@ import type { Language } from '../context/Preferences'
 
 type TextPair = { title: string; description: string; summary?: string }
 
-const contentEn: Record<string, TextPair> = {
-  'binomial-poisson': { title: 'Binomial × Poisson Distributions', description: 'Comparative study of discrete distributions, Bernoulli experiments and probabilistic approximations.' },
-  'exam1-review': { title: 'Exam 1 Review', description: 'Consolidated review material covering the central methods and problems from the first exam.' },
-  'exam1-solutions': { title: 'Exam 1 Solutions / Supporting Material', description: 'Supporting solutions, explanations and study materials related to the first exam.' },
-  epidemics: { title: 'Epidemic Modeling — SIR, SIRS and SEIR', description: 'Compartment models, transition rates and time-based epidemic simulation.' },
-  'exam1-resolution': { title: 'Exam 1 Resolution', description: 'Computational resolution of the first exam, focused on differential equations and numerical methods.' },
-  'exam2-resolution': { title: 'Exam 2 Resolution', description: 'Computational resolution of the second exam with probability, random numbers and numerical simulation.' },
-  projectile: { title: 'Assignment 1 — Projectile Motion', description: 'Motion modeling, numerical integration and projectile trajectory using the Euler method.' },
-  'mass-spring': { title: 'Assignment 2 — Mass-Spring System', description: 'Harmonic oscillator and comparison between Euler, Leap-Frog, Verlet, RK2 and RK4.' },
-  'random-simulation': { title: 'Assignment 3 — Random Numbers, Games and Gas', description: 'Pseudo-random numbers, Monte Carlo methods, stochastic processes and computational gas simulation.' },
-  'ode-review': { title: 'Exam 1 Review — Solving ODEs', description: 'Numerical solution of ODEs, order reduction, systems and applications in Physics.' },
+const contentTranslations: Partial<Record<Language, Record<string, TextPair>>> = {
+ en:{
+  'binomial-poisson':{title:'Binomial × Poisson Distributions',description:'Comparative study of discrete distributions, Bernoulli experiments and probabilistic approximations.'},
+  'exam1-review':{title:'Exam 1 Review',description:'Consolidated review material covering the central methods and problems from the first exam.'},
+  'exam1-solutions':{title:'Exam 1 Solutions / Supporting Material',description:'Supporting solutions, explanations and study materials related to the first exam.'},
+  epidemics:{title:'Epidemic Modeling — SIR, SIRS and SEIR',description:'Compartment models, transition rates and time-based epidemic simulation.'},
+  'exam1-resolution':{title:'Exam 1 Resolution',description:'Computational resolution of the first exam, focused on differential equations and numerical methods.'},
+  'exam2-resolution':{title:'Exam 2 Resolution',description:'Computational resolution of the second exam with probability, random numbers and numerical simulation.'},
+  projectile:{title:'Assignment 1 — Projectile Motion',description:'Motion modeling, numerical integration and projectile trajectory using the Euler method.'},
+  'mass-spring':{title:'Assignment 2 — Mass-Spring System',description:'Harmonic oscillator and comparison between Euler, Leap-Frog, Verlet, RK2 and RK4.'},
+  'random-simulation':{title:'Assignment 3 — Random Numbers, Games and Gas',description:'Pseudo-random numbers, Monte Carlo methods, stochastic processes and computational gas simulation.'},
+  'ode-review':{title:'Exam 1 Review — Solving ODEs',description:'Numerical solution of ODEs, order reduction, systems and applications in Physics.'},
+ },
+ de:{
+  'binomial-poisson':{title:'Binomial- × Poisson-Verteilungen',description:'Vergleich diskreter Verteilungen, Bernoulli-Experimente und probabilistische Näherungen.'},
+  'exam1-review':{title:'Wiederholung Prüfung 1',description:'Zusammengefasster Lernstoff zu den zentralen Methoden und Problemen der ersten Prüfung.'},
+  'exam1-solutions':{title:'Lösungen / Begleitmaterial zu Prüfung 1',description:'Lösungen, Erklärungen und Lernmaterialien zur ersten Prüfung.'},
+  epidemics:{title:'Epidemiemodellierung — SIR, SIRS und SEIR',description:'Kompartimentmodelle, Übergangsraten und zeitabhängige Epidemiesimulation.'},
+  'exam1-resolution':{title:'Lösung Prüfung 1',description:'Computergestützte Lösung der ersten Prüfung mit Schwerpunkt Differentialgleichungen und numerische Methoden.'},
+  'exam2-resolution':{title:'Lösung Prüfung 2',description:'Computergestützte Lösung der zweiten Prüfung mit Wahrscheinlichkeit, Zufallszahlen und Simulation.'},
+  projectile:{title:'Aufgabe 1 — Projektilbewegung',description:'Bewegungsmodellierung, numerische Integration und Flugbahn mit dem Euler-Verfahren.'},
+  'mass-spring':{title:'Aufgabe 2 — Masse-Feder-System',description:'Harmonischer Oszillator und Vergleich von Euler, Leap-Frog, Verlet, RK2 und RK4.'},
+  'random-simulation':{title:'Aufgabe 3 — Zufallszahlen, Spiele und Gas',description:'Pseudozufallszahlen, Monte-Carlo-Methoden, stochastische Prozesse und Gassimulation.'},
+  'ode-review':{title:'Wiederholung Prüfung 1 — DGL lösen',description:'Numerische Lösung von Differentialgleichungen, Ordnungsreduktion, Systeme und Anwendungen in der Physik.'},
+ },
+ fr:{
+  'binomial-poisson':{title:'Distributions binomiale × Poisson',description:'Étude comparative des distributions discrètes, des expériences de Bernoulli et des approximations probabilistes.'},
+  'exam1-review':{title:'Révision de l’examen 1',description:'Synthèse des méthodes et problèmes centraux du premier examen.'},
+  'exam1-solutions':{title:'Solutions / supports de l’examen 1',description:'Solutions, explications et supports d’étude liés au premier examen.'},
+  epidemics:{title:'Modélisation des épidémies — SIR, SIRS et SEIR',description:'Modèles compartimentaux, taux de transition et simulation temporelle des épidémies.'},
+  'exam1-resolution':{title:'Résolution de l’examen 1',description:'Résolution numérique du premier examen, centrée sur les équations différentielles et les méthodes numériques.'},
+  'exam2-resolution':{title:'Résolution de l’examen 2',description:'Résolution numérique du deuxième examen avec probabilités, nombres aléatoires et simulation.'},
+  projectile:{title:'Travail 1 — Mouvement d’un projectile',description:'Modélisation du mouvement, intégration numérique et trajectoire avec la méthode d’Euler.'},
+  'mass-spring':{title:'Travail 2 — Système masse-ressort',description:'Oscillateur harmonique et comparaison entre Euler, Leap-Frog, Verlet, RK2 et RK4.'},
+  'random-simulation':{title:'Travail 3 — Nombres aléatoires, jeux et gaz',description:'Nombres pseudo-aléatoires, méthodes de Monte-Carlo, processus stochastiques et simulation de gaz.'},
+  'ode-review':{title:'Révision examen 1 — Résolution des EDO',description:'Résolution numérique des EDO, réduction d’ordre, systèmes et applications en physique.'},
+ },
+ es:{
+  'binomial-poisson':{title:'Distribuciones binomial × Poisson',description:'Estudio comparativo de distribuciones discretas, experimentos de Bernoulli y aproximaciones probabilísticas.'},
+  'exam1-review':{title:'Repaso del examen 1',description:'Material consolidado sobre los métodos y problemas centrales del primer examen.'},
+  'exam1-solutions':{title:'Soluciones / material del examen 1',description:'Soluciones, explicaciones y materiales de estudio relacionados con el primer examen.'},
+  epidemics:{title:'Modelado de epidemias — SIR, SIRS y SEIR',description:'Modelos compartimentales, tasas de transición y simulación temporal de epidemias.'},
+  'exam1-resolution':{title:'Resolución del examen 1',description:'Resolución computacional del primer examen, centrada en ecuaciones diferenciales y métodos numéricos.'},
+  'exam2-resolution':{title:'Resolución del examen 2',description:'Resolución computacional del segundo examen con probabilidad, números aleatorios y simulación.'},
+  projectile:{title:'Trabajo 1 — Movimiento de proyectil',description:'Modelado del movimiento, integración numérica y trayectoria mediante el método de Euler.'},
+  'mass-spring':{title:'Trabajo 2 — Sistema masa-resorte',description:'Oscilador armónico y comparación entre Euler, Leap-Frog, Verlet, RK2 y RK4.'},
+  'random-simulation':{title:'Trabajo 3 — Números aleatorios, juegos y gas',description:'Números pseudoaleatorios, métodos de Monte Carlo, procesos estocásticos y simulación de gas.'},
+  'ode-review':{title:'Repaso examen 1 — Resolución de EDO',description:'Resolución numérica de EDO, reducción de orden, sistemas y aplicaciones en Física.'},
+ }
 }
 
-const videoEn: Record<string, TextPair> = {
-  J9d1iPYj3KU: { title: 'Assignment 2 Resolution — Comparing Verlet, RK2 and RK4 Errors in the Mass-Spring System', summary: 'Comparison of numerical integration methods applied to the mass-spring oscillator.', description: 'Explores precision, stability and numerical error by comparing integration methods in the mass-spring system.' },
-  '-KPa8fjyLnA': { title: 'Assignment 3 Resolution — Random Numbers, Games and Gas Simulation', summary: 'Applications of random numbers in estimates, games and computational simulations.', description: 'From randomness in stochastic processes to computational simulations of particles and gas.' },
-  '0zPrdzjYgbQ': { title: 'Exam 2 Resolution — Inverse-Function Distributions and Random Decay', summary: 'Sampling, inverse-function transformation and random processes.', description: 'Distribution generation techniques and decay simulations based on random numbers.' },
-  ecDjRUxfV3o: { title: 'Exam 1 Resolution — Higher-Order Differential Equations', summary: 'Computational solution of higher-order differential equations.', description: 'Transforms higher-order problems into systems that can be solved numerically.' },
-  sLxfgroZiWM: { title: 'Numerically Solving Higher-Order Differential Equations in Python', summary: 'Building and solving ODE systems in Python.', description: 'Practical implementation of order reduction and numerical integration methods with Python.' },
-  '1U0hKaoTxnQ': { title: '1D Mass-Spring System — Euler, Leap-Frog and Runge-Kutta', summary: 'Modeling harmonic motion and comparing integration methods.', description: 'From the physical model to numerical curves produced by Euler, Leap-Frog and Runge-Kutta.' },
-  q9bhqxM14JI: { title: 'Epidemic Modeling — SIR, SIRS and SEIR Models', summary: 'Introduction and implementation of compartmental epidemic models.', description: 'Mathematical and computational structure of SIR, SIRS and SEIR models over time.' },
-  'SC4d-72oTys': { title: 'Interactive Charts with Plotly and Widgets in Python', summary: 'Interactive visualizations for exploring model results and parameters.', description: 'Uses Plotly and widgets to turn numerical results into interactive visual exploration.' },
-  'IWg9q-F6WUk': { title: 'Projectile Motion Using the Euler Method — Assignment 1', summary: 'Numerical modeling of a projectile trajectory using Euler integration.', description: 'Motion formulation and step-by-step construction of the numerical trajectory solution.' },
+const videoBase:Record<string,TextPair>={
+ J9d1iPYj3KU:{title:'Assignment 2 Resolution — Comparing Verlet, RK2 and RK4 Errors in the Mass-Spring System',summary:'Comparison of numerical integration methods applied to the mass-spring oscillator.',description:'Explores precision, stability and numerical error by comparing integration methods in the mass-spring system.'},
+ '-KPa8fjyLnA':{title:'Assignment 3 Resolution — Random Numbers, Games and Gas Simulation',summary:'Applications of random numbers in estimates, games and computational simulations.',description:'From randomness in stochastic processes to computational simulations of particles and gas.'},
+ '0zPrdzjYgbQ':{title:'Exam 2 Resolution — Inverse-Function Distributions and Random Decay',summary:'Sampling, inverse-function transformation and random processes.',description:'Distribution generation techniques and decay simulations based on random numbers.'},
+ ecDjRUxfV3o:{title:'Exam 1 Resolution — Higher-Order Differential Equations',summary:'Computational solution of higher-order differential equations.',description:'Transforms higher-order problems into systems that can be solved numerically.'},
+ sLxfgroZiWM:{title:'Numerically Solving Higher-Order Differential Equations in Python',summary:'Building and solving ODE systems in Python.',description:'Practical implementation of order reduction and numerical integration methods with Python.'},
+ '1U0hKaoTxnQ':{title:'1D Mass-Spring System — Euler, Leap-Frog and Runge-Kutta',summary:'Modeling harmonic motion and comparing integration methods.',description:'From the physical model to numerical curves produced by Euler, Leap-Frog and Runge-Kutta.'},
+ q9bhqxM14JI:{title:'Epidemic Modeling — SIR, SIRS and SEIR Models',summary:'Introduction and implementation of compartmental epidemic models.',description:'Mathematical and computational structure of SIR, SIRS and SEIR models over time.'},
+ 'SC4d-72oTys':{title:'Interactive Charts with Plotly and Widgets in Python',summary:'Interactive visualizations for exploring model results and parameters.',description:'Uses Plotly and widgets to turn numerical results into interactive visual exploration.'},
+ 'IWg9q-F6WUk':{title:'Projectile Motion Using the Euler Method — Assignment 1',summary:'Numerical modeling of a projectile trajectory using Euler integration.',description:'Motion formulation and step-by-step construction of the numerical trajectory solution.'},
 }
 
-export const videoContentMap: Record<string, string[]> = {
-  J9d1iPYj3KU: ['mass-spring'],
-  '-KPa8fjyLnA': ['random-simulation'],
-  '0zPrdzjYgbQ': ['exam2-resolution'],
-  ecDjRUxfV3o: ['exam1-resolution', 'exam1-solutions'],
-  sLxfgroZiWM: ['ode-review', 'exam1-review'],
-  '1U0hKaoTxnQ': ['mass-spring'],
-  q9bhqxM14JI: ['epidemics'],
-  'SC4d-72oTys': ['random-simulation'],
-  'IWg9q-F6WUk': ['projectile'],
+const videoTranslations:Partial<Record<Language,Record<string,TextPair>>>={
+ en:videoBase,
+ de:Object.fromEntries(Object.entries(videoBase).map(([id,v])=>[id,{title:v.title.replace('Assignment','Aufgabe').replace('Exam','Prüfung').replace('Resolution','Lösung').replace('Mass-Spring','Masse-Feder').replace('Projectile Motion','Projektilbewegung'),summary:'Numerische und computergestützte Erklärung der behandelten Methode und ihrer Anwendung.',description:'Die Lektion erläutert Modellierung, numerische Umsetzung, Ergebnisse und Interpretation Schritt für Schritt.'}])),
+ fr:Object.fromEntries(Object.entries(videoBase).map(([id,v])=>[id,{title:v.title.replace('Assignment','Travail').replace('Exam','Examen').replace('Resolution','Résolution').replace('Mass-Spring','masse-ressort').replace('Projectile Motion','Mouvement d’un projectile'),summary:'Présentation numérique et informatique de la méthode étudiée et de son application.',description:'Le cours explique pas à pas la modélisation, l’implémentation numérique, les résultats et leur interprétation.'}])),
+ es:Object.fromEntries(Object.entries(videoBase).map(([id,v])=>[id,{title:v.title.replace('Assignment','Trabajo').replace('Exam','Examen').replace('Resolution','Resolución').replace('Mass-Spring','masa-resorte').replace('Projectile Motion','Movimiento de proyectil'),summary:'Explicación numérica y computacional del método estudiado y su aplicación.',description:'La clase explica paso a paso el modelado, la implementación numérica, los resultados y su interpretación.'}])),
 }
 
-export function contentVideoIds(slug: string) {
-  return Object.entries(videoContentMap).filter(([, slugs]) => slugs.includes(slug)).map(([id]) => id)
+export const ui:Record<Language,Record<string,string>>={
+ en:{home:'Home',videos:'Video Lessons',contents:'Contents',files:'Files',about:'About',archive:'THE ARCHIVE',what:'What is MetCompB?',highlights:'HIGHLIGHTS',explore:'Explore by experiment',fullLibrary:'View full library →',openContent:'Open content →',visualLibrary:'VISUAL LIBRARY',allFiles:'All Files',search:'Search file, folder or topic...',allFolders:'All folders',filesFound:'files found',file:'File',folder:'Folder',type:'Type',details:'Details →',openChannel:'Open channel',browseLessons:'Browse lessons',previous:'Previous video',next:'Next video',close:'Close',understand:'Understand this lesson',related:'Also related to:',backContents:'Contents',whatFind:'What you will find here',keyConcepts:'Key concepts',relatedLesson:'RELATED VIDEO LESSON',learnVideo:'Learn with the video lesson',openLessons:'Open video lessons',visualPreview:'Visual preview',browseFigures:'Browse figures and outputs from this content.',availableFiles:'Available files',openFolder:'Open folder on GitHub',aboutProject:'ABOUT THE PROJECT',creator:'Creator and curator of MetCompB.',openPortfolio:'Open Portfolio'},
+ pt:{home:'Home',videos:'Videoaulas',contents:'Conteúdos',files:'Arquivos',about:'Sobre',archive:'O ACERVO',what:'O que é o MetCompB?',highlights:'DESTAQUES',explore:'Explore por experimento',fullLibrary:'Ver biblioteca completa →',openContent:'Abrir conteúdo →',visualLibrary:'BIBLIOTECA VISUAL',allFiles:'Todos os Arquivos',search:'Buscar arquivo, pasta ou tema...',allFolders:'Todas as pastas',filesFound:'arquivos encontrados',file:'Arquivo',folder:'Pasta',type:'Tipo',details:'Detalhes →',openChannel:'Abrir canal',browseLessons:'Navegar pelas aulas',previous:'Vídeo anterior',next:'Próximo vídeo',close:'Fechar',understand:'Entender esta aula',related:'Também relacionado a:',backContents:'Conteúdos',whatFind:'O que você encontra aqui',keyConcepts:'Conceitos envolvidos',relatedLesson:'VIDEOAULA RELACIONADA',learnVideo:'Aprenda com a videoaula',openLessons:'Abrir videoaulas',visualPreview:'Preview visual',browseFigures:'Navegue pelas figuras e resultados deste conteúdo.',availableFiles:'Arquivos disponíveis',openFolder:'Abrir pasta no GitHub',aboutProject:'SOBRE O PROJETO',creator:'Criador e curador do MetCompB.',openPortfolio:'Abrir Portfólio'},
+ de:{home:'Start',videos:'Videolektionen',contents:'Inhalte',files:'Dateien',about:'Über',archive:'DAS ARCHIV',what:'Was ist MetCompB?',highlights:'HIGHLIGHTS',explore:'Nach Experiment erkunden',fullLibrary:'Gesamte Bibliothek anzeigen →',openContent:'Inhalt öffnen →',visualLibrary:'VISUELLE BIBLIOTHEK',allFiles:'Alle Dateien',search:'Datei, Ordner oder Thema suchen...',allFolders:'Alle Ordner',filesFound:'Dateien gefunden',file:'Datei',folder:'Ordner',type:'Typ',details:'Details →',openChannel:'Kanal öffnen',browseLessons:'Lektionen durchsuchen',previous:'Vorheriges Video',next:'Nächstes Video',close:'Schließen',understand:'Diese Lektion verstehen',related:'Ebenfalls verbunden mit:',backContents:'Inhalte',whatFind:'Was Sie hier finden',keyConcepts:'Zentrale Konzepte',relatedLesson:'ZUGEHÖRIGE VIDEOLEKTION',learnVideo:'Mit der Videolektion lernen',openLessons:'Videolektionen öffnen',visualPreview:'Visuelle Vorschau',browseFigures:'Abbildungen und Ergebnisse dieses Inhalts durchsuchen.',availableFiles:'Verfügbare Dateien',openFolder:'Ordner auf GitHub öffnen',aboutProject:'ÜBER DAS PROJEKT',creator:'Ersteller und Kurator von MetCompB.',openPortfolio:'Portfolio öffnen'},
+ fr:{home:'Accueil',videos:'Cours vidéo',contents:'Contenus',files:'Fichiers',about:'À propos',archive:'LES ARCHIVES',what:'Qu’est-ce que MetCompB ?',highlights:'À LA UNE',explore:'Explorer par expérience',fullLibrary:'Voir toute la bibliothèque →',openContent:'Ouvrir le contenu →',visualLibrary:'BIBLIOTHÈQUE VISUELLE',allFiles:'Tous les fichiers',search:'Rechercher un fichier, dossier ou thème...',allFolders:'Tous les dossiers',filesFound:'fichiers trouvés',file:'Fichier',folder:'Dossier',type:'Type',details:'Détails →',openChannel:'Ouvrir la chaîne',browseLessons:'Parcourir les cours',previous:'Vidéo précédente',next:'Vidéo suivante',close:'Fermer',understand:'Comprendre ce cours',related:'Également lié à :',backContents:'Contenus',whatFind:'Ce que vous trouverez ici',keyConcepts:'Concepts clés',relatedLesson:'COURS VIDÉO ASSOCIÉ',learnVideo:'Apprendre avec le cours vidéo',openLessons:'Ouvrir les cours vidéo',visualPreview:'Aperçu visuel',browseFigures:'Parcourez les figures et résultats de ce contenu.',availableFiles:'Fichiers disponibles',openFolder:'Ouvrir le dossier sur GitHub',aboutProject:'À PROPOS DU PROJET',creator:'Créateur et curateur de MetCompB.',openPortfolio:'Ouvrir le portfolio'},
+ es:{home:'Inicio',videos:'Videoclases',contents:'Contenidos',files:'Archivos',about:'Acerca de',archive:'EL ARCHIVO',what:'¿Qué es MetCompB?',highlights:'DESTACADOS',explore:'Explorar por experimento',fullLibrary:'Ver biblioteca completa →',openContent:'Abrir contenido →',visualLibrary:'BIBLIOTECA VISUAL',allFiles:'Todos los archivos',search:'Buscar archivo, carpeta o tema...',allFolders:'Todas las carpetas',filesFound:'archivos encontrados',file:'Archivo',folder:'Carpeta',type:'Tipo',details:'Detalles →',openChannel:'Abrir canal',browseLessons:'Explorar clases',previous:'Video anterior',next:'Video siguiente',close:'Cerrar',understand:'Entender esta clase',related:'También relacionado con:',backContents:'Contenidos',whatFind:'Qué encontrarás aquí',keyConcepts:'Conceptos clave',relatedLesson:'VIDEOCLASE RELACIONADA',learnVideo:'Aprende con la videoclase',openLessons:'Abrir videoclases',visualPreview:'Vista previa visual',browseFigures:'Explora figuras y resultados de este contenido.',availableFiles:'Archivos disponibles',openFolder:'Abrir carpeta en GitHub',aboutProject:'ACERCA DEL PROYECTO',creator:'Creador y curador de MetCompB.',openPortfolio:'Abrir portafolio'}
 }
 
-export function contentText(item: ContentItem, language: Language) {
-  if (language === 'pt') return { title: item.title, description: item.description }
-  return contentEn[item.slug] ?? { title: item.title, description: item.description }
-}
-
-export function videoText(video: Video, language: Language) {
-  if (language === 'pt') return { title: video.title, description: video.description, summary: video.summary }
-  return videoEn[video.id] ?? { title: video.title, description: video.description, summary: video.summary }
-}
+export const videoContentMap:Record<string,string[]>={J9d1iPYj3KU:['mass-spring'],'-KPa8fjyLnA':['random-simulation'],'0zPrdzjYgbQ':['exam2-resolution'],ecDjRUxfV3o:['exam1-resolution','exam1-solutions'],sLxfgroZiWM:['ode-review','exam1-review'],'1U0hKaoTxnQ':['mass-spring'],q9bhqxM14JI:['epidemics'],'SC4d-72oTys':['random-simulation'],'IWg9q-F6WUk':['projectile']}
+export function contentVideoIds(slug:string){return Object.entries(videoContentMap).filter(([,slugs])=>slugs.includes(slug)).map(([id])=>id)}
+export function contentText(item:ContentItem,language:Language){if(language==='pt')return{title:item.title,description:item.description};return contentTranslations[language]?.[item.slug]??contentTranslations.en?.[item.slug]??{title:item.title,description:item.description}}
+export function videoText(video:Video,language:Language){if(language==='pt')return{title:video.title,description:video.description,summary:video.summary};return videoTranslations[language]?.[video.id]??videoBase[video.id]??{title:video.title,description:video.description,summary:video.summary}}
