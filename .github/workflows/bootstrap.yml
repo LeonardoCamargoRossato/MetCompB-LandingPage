@@ -25,8 +25,10 @@ jobs:
           fetch-depth: 0
       - name: Rebuild V0 package
         run: |
-          cat .bootstrap/part* > /tmp/project.zip.b64
+          cat .bootstrap/part01 .bootstrap/fix02a .bootstrap/fix02b .bootstrap/part03 .bootstrap/part04 .bootstrap/part05 .bootstrap/part06 > /tmp/project.zip.b64
+          echo "bd37e0f8de0bfc35b9d4a667e62f0f48a3c45b78fd6ad23d85a00cfb9c53e2dc  /tmp/project.zip.b64" | sha256sum -c -
           base64 --decode /tmp/project.zip.b64 > /tmp/project.zip
+          echo "2b6c6227e90681f88c0f48a1fb16a083c12248380266d330814f92dd540a2191  /tmp/project.zip" | sha256sum -c -
           unzip -o /tmp/project.zip -d .
           rm -rf .bootstrap project.zip.b64 .github/workflows/bootstrap.yml
       - uses: actions/setup-node@v4
