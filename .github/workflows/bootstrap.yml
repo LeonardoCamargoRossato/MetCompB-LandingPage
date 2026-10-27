@@ -1,4 +1,4 @@
-name: Bootstrap and Deploy V0
+name: Finalize V0 Repository
 
 on:
   push:
@@ -17,50 +17,45 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  bootstrap-build:
+  finalize-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Rebuild V0 package
-        run: |
-          cat .bootstrap/part01 .bootstrap/fix02a .bootstrap/fix02b .bootstrap/part03 .bootstrap/part04 .bootstrap/part05 .bootstrap/part06 > /tmp/project.zip.b64
-          echo "bd37e0f8de0bfc35b9d4a667e62f0f48a3c45b78fd6ad23d85a00cfb9c53e2dc  /tmp/project.zip.b64" | sha256sum -c -
-          base64 --decode /tmp/project.zip.b64 > /tmp/project.zip
-          echo "2b6c6227e90681f88c0f48a1fb16a083c12248380266d330814f92dd540a2191  /tmp/project.zip" | sha256sum -c -
-          unzip -o /tmp/project.zip -d .
-          sed -i "s/{ Github, Menu, Terminal, X }/{ Menu, Terminal, X }/; s/<Github size={19}\/>/<Terminal size={19}\/>/" src/components/Layout.tsx
-          sed -i "s/{ ArrowRight, Github, PlayCircle, TerminalSquare }/{ ArrowRight, PlayCircle, TerminalSquare }/; s/<Github size={17}\/>/<TerminalSquare size={17}\/>/" src/pages/Home.tsx
-          sed -i "s/{ ExternalLink, Github, Youtube }/{ ExternalLink }/; s/<Github\/>/<ExternalLink\/>/g; s/<Youtube\/>/<ExternalLink\/>/g" src/pages/About.tsx
-          printf '/// <reference types="vite/client" />\n' > src/vite-env.d.ts
-          rm -rf .bootstrap project.zip.b64
-          rm -f .github/workflows/deploy.yml
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Clean generated files from repository
+        run: |
+          rm -rf node_modules dist
+          rm -f tsconfig.app.tsbuildinfo tsconfig.node.tsbuildinfo
+          cat > .gitignore <<'EOF'
+          node_modules/
+          dist/
+          *.tsbuildinfo
+          .DS_Store
+          EOF
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Clean generated files from V0 repository" || true
+          git push
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
       - name: Build
         run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
-      - name: Commit V0 source
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "Build MetCompB Landing Page V0" || true
-          git push
 
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: bootstrap-build
+    needs: finalize-build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
