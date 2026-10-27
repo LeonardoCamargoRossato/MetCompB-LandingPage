@@ -1,0 +1,28 @@
+.jupyter-accent{border:1px solid #f2a15f!important;background:linear-gradient(135deg,#fff7ef,#ffffff)!important;box-shadow:0 14px 38px rgba(241,133,51,.10)}
+.jupyter-accent .kicker,.jupyter-accent .kicker span{color:#e87519!important}
+.jupyter-logo{background:#fff!important;border:2px solid #f2a15f!important;color:#e87519!important;box-shadow:0 8px 28px rgba(232,117,25,.14)}
+.jupyter-logo img{width:100%;height:100%;object-fit:contain;padding:8px}
+.jupyter-logo span{color:#f59b45!important}
+.jupyter-accent .button{border-color:#efb27f!important;background:#fff!important;color:#b85a12!important}
+.jupyter-accent .button:hover{background:#fff4e9!important;border-color:#e87519!important}
+
+.tutorial-accordion.tutorial-green{background:linear-gradient(135deg,rgba(31,156,87,.12),rgba(31,156,87,.04));border-color:rgba(31,156,87,.35)}
+.tutorial-accordion.tutorial-white{background:var(--panel);border-color:var(--line)}
+.tutorial-accordion.tutorial-green:hover{border-color:var(--green);box-shadow:0 10px 30px rgba(31,156,87,.08)}
+.tutorial-accordion.tutorial-white:hover{border-color:rgba(31,156,87,.45)}
+.tutorial-accordion.tutorial-green .tutorial-toggle{background:transparent}
+.tutorial-accordion.tutorial-white .tutorial-toggle{background:transparent}
+.tutorial-accordion.open{box-shadow:0 14px 36px rgba(0,0,0,.06)}
+
+.jupyter-admin{border-color:rgba(232,117,25,.38)!important;background:linear-gradient(145deg,var(--panel),rgba(232,117,25,.045))!important}
+.jupyter-admin small{color:#e87519!important}
+.jupyter-preview{border-color:#f2a15f!important;background:#fff8f1!important}
+.jupyter-fallback-mark{font:700 34px var(--mono);color:#e87519}
+.jupyter-fallback-mark span{color:#f5a04b}
+
+:root[data-theme="dark"] .jupyter-accent{background:linear-gradient(135deg,#2a1a0f,#151815)!important;border-color:#a75920!important}
+:root[data-theme="dark"] .jupyter-logo{background:#1b1714!important;border-color:#d9782f!important}
+:root[data-theme="dark"] .jupyter-accent .button{background:#1b1714!important;color:#f5a25f!important;border-color:#8e4c1d!important}
+:root[data-theme="dark"] .tutorial-accordion.tutorial-green{background:linear-gradient(135deg,rgba(37,167,95,.16),rgba(20,27,23,.65))}
+:root[data-theme="dark"] .tutorial-accordion.tutorial-white{background:var(--panel)}
+:root[data-theme="dark"] .jupyter-preview{background:#22170f!important;border-color:#a75920!important}
