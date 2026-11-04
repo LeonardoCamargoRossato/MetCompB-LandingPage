@@ -1,9 +1,10 @@
-import { Check, ChevronDown, Menu, Moon, Sun, Terminal, X } from 'lucide-react'
+import { Check, ChevronDown, Menu, Moon, Sun, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { contents } from '../data/contents'
 import { contentText } from '../data/localization'
 import { LanguageFlag } from './LanguageFlag'
+import { METCOMPB_DEFAULT_ICON } from '../assets/metcompbDefaultIcon'
 import { usePreferences, type Language } from '../context/Preferences'
 
 const portfolioUrl='https://leonardocamargorossato.github.io/LCR-SolutionsArchitecture-IA-Quantum/#/'
@@ -17,7 +18,7 @@ export function Layout(){
  const {language,theme,setLanguage,setTheme,siteIconUrl}=usePreferences();const current=languages.find(x=>x.code===language)!
  useEffect(()=>{const close=(e:MouseEvent)=>{if(languageBox.current&&!languageBox.current.contains(e.target as Node))setLanguageOpen(false)};document.addEventListener('mousedown',close);return()=>document.removeEventListener('mousedown',close)},[])
  const closeNav=()=>{setOpen(false);setContentsOpen(false)}
- return <div className="app-shell"><header className="header"><NavLink to="/" className="brand"><span className="brand-mark">{siteIconUrl?<img src={siteIconUrl} alt="MetCompB"/>:<Terminal size={20}/>}</span><span><b>MetCompB</b><small>Scientific Computing Lab</small></span></NavLink><button className="menu-btn" onClick={()=>setOpen(!open)} aria-label="Menu">{open?<X/>:<Menu/>}</button><nav className={open?'nav open':'nav'}>
+ return <div className="app-shell"><header className="header"><NavLink to="/" className="brand"><span className="brand-mark"><img src={siteIconUrl || METCOMPB_DEFAULT_ICON} alt="MetCompB logo" /></span><span><b>MetCompB</b><small>Scientific Computing Lab</small></span></NavLink><button className="menu-btn" onClick={()=>setOpen(!open)} aria-label="Menu">{open?<X/>:<Menu/>}</button><nav className={open?'nav open':'nav'}>
  <NavLink to="/" onClick={closeNav} className={({isActive})=>isActive?'active':''}>{navByLanguage[language][0]}</NavLink>
  <NavLink to="/videoaulas" onClick={closeNav} className={({isActive})=>isActive?'active':''}>{navByLanguage[language][1]}</NavLink>
  <div className={'nav-dropdown '+(contentsOpen?'open':'')}><div className="nav-dropdown-trigger"><NavLink to="/conteudos" onClick={()=>setOpen(false)} className={({isActive})=>isActive?'active':''}>{navByLanguage[language][2]}</NavLink><button aria-label="Open contents menu" onClick={()=>setContentsOpen(!contentsOpen)}><ChevronDown size={14}/></button></div><div className="contents-menu"><NavLink to="/conteudos/tutorial-jupyter" onClick={closeNav} className="tutorial-link">◉ {tutorialLabel[language]}</NavLink>{contents.map(item=><NavLink key={item.slug} to={'/conteudos/'+item.slug} onClick={closeNav}>{contentText(item,language).title}</NavLink>)}</div></div>
