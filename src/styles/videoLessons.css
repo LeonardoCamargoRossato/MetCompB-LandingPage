@@ -1,0 +1,29 @@
+/* Scoped YouTube channel action — both color themes */
+.video-lessons-page .youtube-channel-button {
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  color:var(--text);
+  white-space:nowrap;
+  transition:background-color .2s ease,border-color .2s ease,color .2s ease;
+}
+.video-lessons-page .youtube-channel-button .youtube-channel-icon{flex:none}
+.video-lessons-page .youtube-channel-button .youtube-icon-bg{fill:#e62117;transition:fill .2s ease}
+.video-lessons-page .youtube-channel-button .youtube-icon-play{fill:#fff;transition:fill .2s ease}
+.video-lessons-page .youtube-channel-button:hover,
+.video-lessons-page .youtube-channel-button:focus-visible,
+:root[data-theme="light"] .video-lessons-page .youtube-channel-button:hover,
+:root[data-theme="light"] .video-lessons-page .youtube-channel-button:focus-visible{
+  background:#e62117;
+  border-color:#e62117;
+  color:#fff;
+}
+.video-lessons-page .youtube-channel-button:hover .youtube-icon-bg,
+.video-lessons-page .youtube-channel-button:focus-visible .youtube-icon-bg{fill:#fff}
+.video-lessons-page .youtube-channel-button:hover .youtube-icon-play,
+.video-lessons-page .youtube-channel-button:focus-visible .youtube-icon-play{fill:#e62117}
+@media(max-width:900px){
+  .video-lessons-page .split-title .youtube-channel-button{margin-top:14px}
+}
