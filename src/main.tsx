@@ -7,6 +7,7 @@ import './styles/enhancements.css'
 import './styles/tutorial.css'
 import './styles/videoLessons.css'
 import './styles/jupyter-theme.css'
+import './styles/languageFlags.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
