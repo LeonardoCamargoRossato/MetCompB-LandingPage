@@ -9,6 +9,7 @@ import './styles/videoLessons.css'
 import './styles/jupyter-theme.css'
 import './styles/languageFlags.css'
 import './styles/filesMobileHotfix.css'
+import './styles/homeCardsMobile.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
