@@ -1,0 +1,12 @@
+/* Waving desktop flags, native emoji flag glyphs on mobile. */
+.language-picker .language-flag{
+ display:inline-flex;align-items:center;justify-content:center;
+ width:29px;height:24px;flex:0 0 29px;line-height:1;
+}
+.language-picker .language-flag-wave{display:block;width:28px;height:23px;flex:none}
+.language-picker .language-flag-emoji{display:none;font-size:23px;line-height:1}
+.language-picker .language-menu button .language-flag{font-size:initial}
+@media (max-width:760px){
+ .language-picker .language-flag-wave{display:none}
+ .language-picker .language-flag-emoji{display:block}
+}
