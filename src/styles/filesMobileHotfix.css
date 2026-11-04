@@ -1,0 +1,45 @@
+/* File Explorer: fluid columns, wrapping filenames, and touch-friendly links. */
+.files-explorer-page,
+.files-explorer-page .filter-bar,
+.files-explorer-page .explorer{min-width:0;max-width:100%}
+.files-explorer-page .filter-bar{grid-template-columns:minmax(0,1fr) minmax(0,180px) minmax(0,280px)}
+.files-explorer-page .search{min-width:0}
+.files-explorer-page .search svg{flex:0 0 auto}
+.files-explorer-page .search input{min-width:0;max-width:100%}
+.files-explorer-page .filter-bar select{min-width:0;width:100%;max-width:100%;text-overflow:ellipsis}
+.files-explorer-page .explorer-row{min-width:0;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) 110px 34px}
+.files-explorer-page .file-name{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;min-width:0;align-items:center}
+.files-explorer-page .file-name>span{display:flex;align-items:center;justify-content:center}
+.files-explorer-page .file-name>div{min-width:0}
+.files-explorer-page .file-name b,
+.files-explorer-page .file-name small{
+ white-space:normal;overflow:visible;text-overflow:clip;
+ overflow-wrap:anywhere;word-break:normal;
+}
+.files-explorer-page .explorer-row>a{
+ display:flex;align-items:center;justify-content:center;
+ width:34px;min-width:34px;height:36px;
+ justify-self:end;align-self:center;
+}
+.files-explorer-page .explorer-row>a svg{flex:0 0 auto}
+.footer-credit .footer-archive,.footer-credit .footer-author{display:block}
+.footer-credit .footer-author{margin-top:5px}
+@media(max-width:900px){
+ .files-explorer-page .filter-bar{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .files-explorer-page .search{grid-column:1/-1}
+ .files-explorer-page .explorer-row{grid-template-columns:minmax(0,1fr) 90px 34px}
+ .files-explorer-page .explorer-row code{display:none}
+}
+@media(max-width:620px){
+ .files-explorer-page .filter-bar{grid-template-columns:minmax(0,1fr)}
+ .files-explorer-page .filter-bar>*{grid-column:auto;min-width:0}
+ .files-explorer-page .filter-bar select{height:44px}
+ .files-explorer-page .explorer-row{
+  grid-template-columns:minmax(0,1fr) 36px;
+  align-items:center;gap:10px;padding:12px 12px;
+ }
+ .files-explorer-page .explorer-row em{display:none}
+ .files-explorer-page .file-name{grid-template-columns:22px minmax(0,1fr);gap:10px}
+ .files-explorer-page .file-name b{line-height:1.55}
+ .files-explorer-page .file-name small{line-height:1.5}
+}
